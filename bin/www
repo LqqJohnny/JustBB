@@ -1,0 +1,131 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('justbb:server');
+var http = require('http');
+var socket = require("socket.io");
+var userdata = require('../usersData.js');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+let userAndSocketidMap={};
+var server = http.createServer(app);
+var io = socket.listen(server);
+// 上线的时候 触发
+io.sockets.on('connection', function (socket) {
+    //有人上线
+    socket.on('online', function (data) {
+      //将上线的用户名存储为 socket 对象的属性，以区分每个 socket 对象，方便后面使用
+      socket.name = data.user;
+      //users 对象中不存在该用户名则插入该用户名
+      userdata.addUser(data.user);
+      //向所有用户广播该用户上线信息
+      io.sockets.emit('online', {users: userdata.getAllUser(), user: data.user});
+      // 将 sockletid 保存
+      userAndSocketidMap[data.user] =  socket.id;
+    });
+    //有人发话
+    socket.on('say', function (data) {
+      if (data.to == 'all') {
+        //向其他所有用户广播该用户发话信息
+        socket.broadcast.emit('say', data);
+      } else {
+        //向特定用户发送该用户发话信息
+        if(userAndSocketidMap[data.to]) {
+            //注意了，1.0 之后的版本只能这么写了。预先把该user对应的socketid保存起来。
+            io.sockets.connected[userAndSocketidMap[data.to]].emit("say",data);
+        } else {
+            console.log("目标用户未上线");
+        }
+
+      }
+    });
+    socket.on("disconnect",function(data){
+        userdata.deleteUser(socket.name);
+        //向其他所有用户广播该用户下线信息
+        socket.broadcast.emit('offline', {users: userdata.getAllUser(), user: socket.name});
+    })
+
+});
+
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+console.log('listening at port  : '+port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

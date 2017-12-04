@@ -1,0 +1,253 @@
+#contain{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+#content{
+  position: absolute;
+  top: 0;
+  right: 200px;
+  bottom: 0;
+  left: 0;
+}
+#content_show{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 140px;
+  right: 0;
+}
+#content_saying{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 140px;
+  right: 0;
+}
+#users_online{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+}
+#toolbar{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 30px;
+  background: #aaa;
+  background: rgba(0,0,0,0.2);
+}
+#usersbar{
+  position: absolute;
+  top: 95px;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  background: #fff;
+}
+#user_label{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height:30px;
+  background: #aaa;
+  background: rgba(0,0,0,0.4);
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  color: #eee;
+}
+#users_list{
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 0 10px 10px;
+}
+#users_list ul{
+  width:100%;
+  height:100%;
+  list-style: none;
+  overflow-x:hidden;
+  overflow-y:scroll;
+}
+#users_list ul li{
+  width: 155px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 25px;
+  line-height: 25px;
+  padding: 0 5px;
+  cursor: pointer;
+  border-bottom: 1px dashed #666;
+}
+#users_list ul li:hover{
+  background: #eee;
+  background:  rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+.sayingto{
+  background: #ddd;
+  background: rgba(0,0,0,0.3);
+  border-radius: 5px;
+  color: #39F;
+}
+#contents{
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  background: #eee;
+  background: rgba(0,0,0,0.1);
+  border-radius: 5px;
+  padding: 10px;
+  overflow: auto;
+}
+#contents>div{
+    width:100%;
+
+}
+#input_content{
+  position: absolute;
+  top: 35px;
+  left: 5px;
+  right: 105px;
+  bottom: 30px;
+  border-top-left-radius: 5px;
+  outline: none;
+  padding: 10px;
+  overflow:auto;
+  background: #eee;
+  background: rgba(0,0,0,0.1);
+}
+#sayingto{
+  color:#d9d9d9;
+  background: #999;
+  background: rgba(0,0,0,0.3);
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  height: 25px;
+  line-height: 25px;
+  padding: 0 10px;
+  border-bottom-left-radius: 5px;
+}
+#from
+{
+  color:#F90;
+  font-weight:bold;
+}
+#to{
+  color:#39F;
+  font-weight:bold
+}
+#say{
+  position: absolute;
+  top: 35px;
+  right: 5px;
+  bottom: 30px;
+  width: 100px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 75px;
+  font-size: 24px;
+  font-weight: bolder;
+  font-family: "幼圆","微软雅黑","黑体","宋体";
+  color: #eee;
+  background: #666;
+  background: rgba(0,0,0,0.5);
+}
+.left{
+    text-align: left;
+}
+.right{
+    text-align: right;
+}
+.system{
+    text-align: center;
+}
+
+.bold{
+    font-weight: bold;
+    color:inherit;
+}
+.right>.icon,.left>.icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    color:#fff;
+    font-size: 20px;
+    line-height:40px;
+    background-color: blue;
+    text-align: center;
+    display: inline-block;
+    margin:20px;
+}
+.msg{
+    display:inline-block;
+    padding:5px 20px;
+    background-color: #a4a4a4;
+    color:#fff;
+    border-radius: 5px;
+}
+.msg div{
+    color:#fff;
+}
+.time{
+    display:inline-block;
+    font-size: 13px;
+    color:#8b8a8a;
+    margin-right:20px;
+    margin-left:20px;
+}
+.secret .tag{
+    font-size:13px;
+    background-color: rgb(213, 135, 3);
+    color:#fff;
+    border-radius: 20px;
+    padding: 3px 5px;
+    display: inline-block;
+    margin:3px;
+}
+.currentUser{
+    padding-top:20px;
+    padding-left: 10px;
+}
+#icon{
+    width:60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgb(227, 109, 34);
+    display:inline-block;
+    text-align: center;
+    line-height: 60px;
+    color:#fff;
+    font-size:25px;
+    vertical-align: bottom;
+}
+#username{
+    display:inline-block;
+    height: 60px;
+    text-align: left;
+    text-indent: 20px;
+    line-height: 60px;
+    font-size: 14px;
+    width:100px;
+    overflow: hidden;
+
+}
+.myself{
+    color:rgb(25, 131, 218);
+}
