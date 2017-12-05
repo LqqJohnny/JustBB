@@ -5,6 +5,8 @@
 <title>聊天室</title>
 <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
 <script type="text/javascript" src="/javascripts/jquery.cookie.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.qqFace.js"></script>
+
 <link type="text/css" rel="stylesheet" href="/stylesheets/common.css">
 <link type="text/css" rel="stylesheet" href="/stylesheets/chat.css">
 </head>
@@ -15,7 +17,27 @@
         <div id="contents"></div>
       </div>
       <div id="content_saying">
-        <div id="toolbar"></div>
+        <div id="toolbar">
+            <div class="tool face">
+                表情
+            </div>
+            <div class="tool imgs">
+                <div class="showBtn" style="color:inherit;">斗图</div>
+                <div id="searchImg">
+                    <div id="close">X</div>
+                    <div class="searchArea">
+                        <input type="text" id="searchImgWord">
+                        <input type="button" value="搜索" id="startSearch">
+                    </div>
+                    <div id="searchResult">
+                        <ul>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div id="input_content" contenteditable="true"></div>
         <div id="sayingto">你好 <span id="from"></span> ，你正在对 <span id="to"></span> 说</div>
         <div id="say">发送</div>
@@ -39,19 +61,86 @@
   <script type="text/javascript" src="/javascripts/chat.js"></script>
   <script type="text/javascript">
 
+    // 表情
+    $('.tool.face').qqFace({
+        id : 'facebox',
+        assign:'input_content', //给输入框赋值
+        path:'/images/face/'    //表情图片存放的路径
+    });
+
+    $(".tool.imgs .showBtn").click(function(){
+        $("#searchImg").toggle();
+    })
+    // 点击图片发送消息
+    $("#searchResult").click(function(e){
+        if(e.target.localName === "img"){
+            // 发送消息
+            var $msg = e.target.outerHTML;
+            if (to == "all") {
+              $("#contents").append('<div class="right"><div class="time">'+now()+'</div><div class="msg">' + $msg + '</div><div class="icon">'+from.substring(0,1)+'</div></div><br />');
+            } else {
+              $("#contents").append('<div  class="right secret" ><div class="time">'+now()+'</div><div class="tag">私信  @'+to+'</div><div class="msg">' + $msg + '</div><div class="icon">'+from.substring(0,1)+'</div></div><br />');
+            }
+            //发送发话信息
+            socket.emit('say', {from: from, to: to, msg: $msg});
+            $("#searchImg").hide();
+            scroll();
+        }
+    })
+
+    //  搜索
+    $("#startSearch").click(function(){
+        $("#searchResult>ul").append('<div class="loading" style="text-align:center;font-size:20px;">加载中....请稍候...</div>')
+        getImgs($("#searchImgWord").val().trim());
+    })
+    $("#searchImgWord").keydown(function(e){
+        if(e.keyCode==13){
+            $("#startSearch").click();
+        }
+    })
+    function getImgs(word){
+        $.ajax({
+            url:"/data/search?word="+word,
+            type:"get",
+            success: function(data){
+                showImgs(data);
+            },
+            error:function(){
+                var wrap = $("#searchResult>ul");
+                wrap.html('<div style = "text-align:center;font-size:20px;">抱歉，未找到对应图片</div>')
+            }
+        })
+    }
+    // 插入图片到 html
+    function showImgs(data){
+        var wrap = $("#searchResult>ul");
+        if(data.length==0 || !data){
+            wrap.html('<div style = "text-align:center;font-size:20px;">抱歉，未找到对应图片</div>')
+        }else{
+            var _html='';
+            var length= Math.min(data.length,20);
+            for(var i = 0 ;i<length; i++){
+                if(typeof(data[i]) == "string" && data[i]!=""){
+                    _html+='<li class="item"><img src="http:'+data[i]+'"/></li>';
+                }
+            }
+            wrap.html(_html);
+        }
+    }
+
     $("#icon").html(from.substring(0,1));
     $("#username").html(from);
 
     //发话
     $("#say").click(function() {
       //获取要发送的信息
-      var $msg = $("#input_content").text().replace(/[\r\n]/g,"");
+      var $msg = $("#input_content").html().replace(/[\r\n]/g,"");
       if ($msg == "") return;
       //把发送的信息先添加到自己的浏览器 DOM 中
       if (to == "all") {
         $("#contents").append('<div class="right"><div class="time">'+now()+'</div><div class="msg">' + $msg + '</div><div class="icon">'+from.substring(0,1)+'</div></div><br />');
       } else {
-        $("#contents").append('<div  class="right secret" ><div class="time">'+now()+'</div><div class="tag">私</div><div class="msg">' + $msg + '</div><div class="icon">'+from.substring(0,1)+'</div></div><br />');
+        $("#contents").append('<div  class="right secret" ><div class="time">'+now()+'</div><div class="tag">私信 @'+to+'</div><div class="msg">' + $msg + '</div><div class="icon">'+from.substring(0,1)+'</div></div><br />');
       }
       //发送发话信息
       socket.emit('say', {from: from, to: to, msg: $msg});
@@ -61,7 +150,7 @@
     });
     $("#input_content").keydown(function(event) {
         /* Act on the event */
-        if(event.keyCode==13){
+        if(event.keyCode==13 && !event.shiftKey){
             $("#say").click();
         }
     });
