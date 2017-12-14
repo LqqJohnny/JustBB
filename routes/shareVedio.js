@@ -23,7 +23,7 @@ function findSync(startPath) {
             let fPath=join(path,val);
             let stats=fs.statSync(fPath);
             if(stats.isDirectory()) finder(fPath);
-            if(stats.isFile()) result.push(val);
+            if(stats.isFile()) result.push(fPath.replace(/public\\vedios\\/,""));
         });
 
     }
