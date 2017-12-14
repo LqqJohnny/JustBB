@@ -90,7 +90,8 @@
 
     //  搜索
     $("#startSearch").click(function(){
-        $("#searchResult>ul").append('<div class="loading" style="text-align:center;font-size:20px;">加载中....请稍候...</div>')
+
+        $("#searchResult>ul").empty().append('<div class="loading" style="text-align:center;font-size:20px;">加载中....请稍候...</div>')
         getImgs($("#searchImgWord").val().trim());
     })
     $("#searchImgWord").keydown(function(e){

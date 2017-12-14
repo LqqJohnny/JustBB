@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/sakura.css">
+    <style>
+    body{
+        background-color: rgb(236, 236, 236);
+    }
+        .code{
+            width:200px;
+            height:200px;
+            margin:30px auto;
+        }
+
+    </style>
+    <title>资源分享</title>
+</head>
+<body>
+    <blockquote>长按二维码，打赏一下吧</blockquote>
+    <div class="code">
+        <img src="/images/code.jpg" alt="">
+    </div>
+    <p>↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓可在线观看↓↓↓↓↓↓↓↓↓↓↓↓↓↓</p>
+    <div class="list">
+        <ul id="vedioList"></ul>
+    </div>
+
+    <blockquote>
+        找资源不易，最后再求一波打赏支持吧！
+    </blockquote>
+<script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+<script>
+
+    $(function(){
+        $.ajax({
+            url : "/shareVedio/getDataList",
+            type:"get",
+            success : function(data){
+                if(data.length>0){
+                    var _html = "";
+                    for(var i = 0 ;i<data.length ; i++){
+                        _html+='<li class="vedio"><a href="/vedios/'+data[i]+'" target = "_blank">'+data[i]+'</a></li>'
+                    }
+                    $("#vedioList").append(_html);
+                }
+            }
+        })
+
+
+    })
+
+</script>
+</body>
+</html>
