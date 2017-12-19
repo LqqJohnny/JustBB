@@ -9,6 +9,7 @@ var debug = require('debug')('justbb:server');
 var http = require('http');
 var socket = require("socket.io");
 var userdata = require('../usersData.js');
+var draw_guess_data = require('../draw_guess_data.js');
 
 /**
  * Get port from environment and store in Express.
@@ -21,6 +22,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 let userAndSocketidMap={};
+let DGroomUser = {};
 var server = http.createServer(app);
 var io = socket.listen(server);
 // 上线的时候 触发
@@ -52,12 +54,53 @@ io.sockets.on('connection', function (socket) {
 
       }
     });
+    // 进入  你画我猜房间
+    socket.on("enterDGRoom",function(data){
+        var guest  = data.user;
+        var creator = data.creator;
+        // 储存进入房间人的id
+        if(typeof  DGroomUser[creator] == "undefined"){
+            // if 是第一个进来的   则 初始化
+            DGroomUser[creator]={};
+        }
+        if(guest == creator){ // if 是 房主进来了
+            DGroomUser[creator].owner = socket.id;
+            if(Object.keys(DGroomUser[creator]).length == 2){
+                // 两个人都齐了 向guest发送消息
+                io.sockets.connected[DGroomUser[creator].guest].emit("someoneEnter",{user: creator});
+            }else{// 人没齐
+
+            }
+        }else{ // if 是 guest
+            DGroomUser[creator].guest = socket.id;
+            if(Object.keys(DGroomUser[creator]).length == 2){
+                // 两个人都齐了 向  房主  发送消息
+                io.sockets.connected[DGroomUser[creator].owner].emit("someoneEnter",{user: guest});
+            }else{// 人没齐
+
+            }
+        }
+
+        console.log(DGroomUser[creator]);
+    })
+    socket.on("leaveDGRoom",function(data){
+        //通知 另一个玩家  离开房间 信息rs
+        var user = data.user;
+        var creator = data.creator;
+        var role = user==creator?"owner":"guest"; // owner  or  guest
+        delete DGroomUser[creator][role];
+        var noticeRole =  role=="owner"?"guest":"owner";
+        //  通知之前还需要判断一下 是否存在 此id 如果那个人没进来呢
+        if(typeof DGroomUser[creator][noticeRole] != "undefined"){
+            io.sockets.connected[DGroomUser[creator][noticeRole]].emit("someoneLeave",{user: user});
+        }
+    })
+
     socket.on("disconnect",function(data){
         userdata.deleteUser(socket.name);
         //向其他所有用户广播该用户下线信息
         socket.broadcast.emit('offline', {users: userdata.getAllUser(), user: socket.name});
     })
-
 });
 
 

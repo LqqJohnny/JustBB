@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>你画我猜</title>
+    <link rel="stylesheet" href="/stylesheets/draw.css">
+</head>
+<body>
+    <div id="container">
+        <div class="people">
+            <span class="owner player">无</span>
+            <span class="vs"> VS </span>
+            <span class="guest player" style="background-color:rgb(218, 12, 43);">无</span>
+        </div>
+        <div class="canvas">
+            <div id="answer">
+                <div class="dialog">
+                    <div class="left">这是一个球</div>
+                    <div class="right">篮球</div>
+                    <div class="center">错误！！！</div>
+                </div>
+                <div class="input">
+                    <input type="text" id ="word">
+                </div>
+            </div>
+            <canvas id="draw">
+
+
+            </canvas>
+        </div>
+    </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.cookie.js"></script>
+<script>
+$(function(){
+    var socket = io.connect();
+    var from = $.cookie('user');//从 cookie 中读取用户名，存于变量 from
+    var creator = GetQueryString("creator");
+    var role = creator===from?"owner":"guest";
+    if(creator===from){
+        $(".owner").html(from.substring(0,1));
+    }else{
+        $(".guest").html(from.substring(0,1));
+    }
+    socket.emit('enterDGRoom', {user: from,creator:GetQueryString('creator')});
+
+// socket
+socket.on('someoneEnter', function (data) {
+  //  有人进入了房间  返回了所有人员的信息
+    if(role=="owner"){
+        $(".guest").html(data.user.substring(0,1));
+        $(".dialog").append('<div class="center">挑战者【'+data.user+'】进入了房间</div>')
+    }else{
+        $(".owner").html(data.user.substring(0,1));
+        $(".dialog").append('<div class="center">房主【'+data.user+'】进入了房间</div>')
+    }
+});
+socket.on('someoneLeave', function (data) {
+  //  有人离开了房间
+
+});
+
+//  点击 开始按钮之后 在开始
+    let draw = new Draw('canvas');
+    draw.init(ws, btn)
+
+function GetQueryString(name){
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  decodeURI(r[2]); return null;
+}
+
+
+window.onbeforeunload =function(){
+    socket.emit('leaveDGRoom', {user: from,creator:GetQueryString('creator')});
+}
+
+})
+</script>
+</body>
+</html>

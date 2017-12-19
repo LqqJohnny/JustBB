@@ -1,0 +1,76 @@
+#container{
+    width:70%;
+    margin:20px auto;
+    height:700px;
+    border:1px solid #333;
+    border-radius: 10px;
+}
+.people {
+    text-align: center;
+    padding-top:20px;
+}
+.people .player{
+    width: 60px;
+    height:60px;
+    line-height:60px;
+    font-size:20px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: rgb(30, 89, 221);
+    color: #fff;
+}
+.people .vs{
+    margin:0 20px;
+    font-size:30px;
+    line-height: 60px;;
+    font-family: fantasy;
+}
+.canvas{
+    width:90%;
+    margin:20px auto;
+    height:500px;
+}
+#answer{
+    width:18%;
+    float:left;
+    height:100%;
+    padding-right:20px;
+}
+#answer .dialog{
+    height:450px;
+    margin:0 auto;
+    overflow:auto;
+    border:1px solid #333;
+    padding:20px;
+    font-size:14px;
+}
+.dialog .left{
+    text-align: left;
+}
+.dialog .right{
+    text-align: right;
+}
+.dialog .center{
+    text-align: center;
+    margin:10px ;
+    color:rgb(214, 28, 22);
+    font-size: 14px;
+}
+#answer .input{
+    height:30px;
+    margin:10px auto;
+    border:1px solid #333;
+}
+#word{
+    width:100%;
+    height:92%;
+    text-indent: 10px;
+    border:none;
+}
+#draw{
+    width:80%;
+    height:100%;
+    float:right;
+    cursor: crosshair;
+    background-color: #353535;
+}

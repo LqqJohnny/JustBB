@@ -28,9 +28,11 @@
         $("#contents").append('<div class="left secret"><div class="icon">'+data.from.substring(0,1)+'</div><div class="msg">' + data.msg + '</div><div class="tag">私</div><div class="time">'+now()+'</div></div><br />');
       }
       scroll();
+
     });
 //  有人下线
     socket.on('offline', function (data) {
+        if(typeof data.user =="undefined"){return ;}
         var sys = '<div class="system" style="color:#f00">' + '用户 ' + data.user + ' 下线了！(' + now() + ')</div>';
          $("#contents").append(sys + "<br/>");
          //刷新用户在线列表

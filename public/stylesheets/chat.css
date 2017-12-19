@@ -339,3 +339,28 @@ span.emotion:hover { background-position: 2px -28px }
     text-align: center;
     border-radius: 50%;
 }
+.tool .draw{
+    cursor: pointer;
+    width:300px;
+    color:#fff;
+    text-align: left;
+    padding:0;
+    margin:0;
+    display: block;
+}
+
+ .msg .draw img{
+    vertical-align: top;
+    display:inline-block;
+    width:200px;
+}
+
+.draw span{
+    vertical-align: top;
+    width:100px;
+    color:#fff;
+    margin-left: 10px;
+    line-height: 20px;
+    display:inline-block;
+    text-align: left;
+}
