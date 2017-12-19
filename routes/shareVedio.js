@@ -30,9 +30,9 @@ function findSync(startPath) {
         let fPath=join(path,val); // 用于分析是否是 文件夹 返回的数据用的是 val
 
         let stats=fs.statSync(fPath);
-        if(stats.isDirectory()) {result.unshift({type:"directory",name:val})};
+        var pa = fPath.replace(/public\\vedios\\/,"");
+        if(stats.isDirectory()) {result.unshift({type:"directory",name:val,path:pa})};
         if(stats.isFile()){
-            var pa = fPath.replace(/public\\vedios\\/,"");
             result.push({type:"file", name:val, path:pa});
         }
     });

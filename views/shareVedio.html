@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/stylesheets/sakura.css">
     <script>
-        if(location.pathname=="/shareVedio"){
-            window.location.href="/shareVedio/"
-        }
+        // if(location.pathname=="/shareVedio"){
+        //     window.location.href="/shareVedio/"
+        // }
     </script>
     <style>
     body{
@@ -53,10 +53,13 @@
     <title>资源分享</title>
 </head>
 <body>
-    <blockquote>长按二维码，打赏一下吧</blockquote>
-    <div class="code">
+    <blockquote>
+        <!-- 长按二维码，打赏一下吧 -->
+        本站不稳定 ，不定时关闭或开启，爱看不看
+    </blockquote>
+    <!-- <div class="code">
         <img src="/images/code.jpg" alt="">
-    </div>
+    </div> -->
     <div id="search"><input type="text" id="searchInp" placeholder="输入搜索词"> <input type="button" id="startSearch" value="搜索"></div>
     <p>↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓可在线观看↓↓↓↓↓↓↓↓↓↓↓↓↓↓</p>
     <div class="list">
@@ -64,7 +67,7 @@
                 <li id="back"><a href="../">../上一页</a></li>
             <%for(var i = 0 ; i < list.length ; i++) { %>
                 <% if(list[i].type == "directory"){ %>
-                     <li class="<%=list[i].type%>"><a href="<%=list[i].name%>/"><%=list[i].name%></a></li>
+                     <li class="<%=list[i].type%>"><a href="/shareVedio/<%=list[i].path%>/"><%=list[i].name%></a></li>
                 <% }else if(list[i].type == "file"){  %>
                      <li class="<%=list[i].type%>"><a href="/vedios/<%=list[i].path%>" target = "_blank"><%=list[i].name%></a></li>
                 <% } %>
@@ -73,7 +76,7 @@
     </div>
 
     <blockquote>
-        找资源不易，最后再求一波打赏支持吧！
+        <!-- 找资源不易，最后再求一波打赏支持吧！ -->
     </blockquote>
 </body>
 <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
