@@ -47,9 +47,9 @@ function searchSync(word) {
             let fPath=join(path,val);
             let stats=fs.statSync(fPath);
             if(val.indexOf(word)>-1){  //  含有搜索词
-                if(stats.isDirectory()) {result.unshift({type:"directory",name:val})};
+                var pa = fPath.replace(/public\\vedios\\/,"");
+                if(stats.isDirectory()) {result.unshift({type:"directory",name:val,path:pa})};
                 if(stats.isFile()){
-                    var pa = fPath.replace(/public\\vedios\\/,"");
                     result.push({type:"file", name:val, path:pa});
                 }
             }else{  // 不包含搜索词

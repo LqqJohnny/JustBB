@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\Gaodig_Dev08\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'dev' ]
+2 info using npm@4.0.3
+3 info using node@v6.10.3
+4 verbose run-script [ 'predev', 'dev', 'postdev' ]
+5 info lifecycle justbb@0.0.0~predev: justbb@0.0.0
+6 silly lifecycle justbb@0.0.0~predev: no script for predev, continuing
+7 info lifecycle justbb@0.0.0~dev: justbb@0.0.0
+8 verbose lifecycle justbb@0.0.0~dev: unsafe-perm in lifecycle true
+9 verbose lifecycle justbb@0.0.0~dev: PATH: C:\Users\Gaodig_Dev08\AppData\Roaming\npm\node_modules\npm\bin\node-gyp-bin;G:\workspace\Atom\JustBB\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\NetSarang;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_91\bin;C:\Program Files\Java\jdk1.8.0_91\jre\bin;F:\cygwin64\bin;F:\cygwin64\usr\sbin;F:\apache-maven-3.3.9\bin;C:\Program Files (x86)\MySQL\MySQL Server 5.5\bin;C:\Program Files\MySQL\MySQL Server 5.5\bin;G:\workspace\node\node-echo\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\Program Files\Git\mingw64\libexec\git-core;C:\Program Files\nodejs\;F:\phoneGap\android-sdk\tools;F:\phoneGap\android-sdk\platform-tools;F:\Ruby23\bin;C:\Users\Gaodig_Dev08\AppData\Local\Microsoft\WindowsApps;C:\Users\Gaodig_Dev08\AppData\Local\atom\bin;C:\Users\Gaodig_Dev08\AppData\Roaming\npm;C:\Users\Gaodig_Dev08\Desktop\抓包工具\Fiddler;C:\Users\Gaodig_Dev08\AppData\Local\Pandoc\;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
+10 verbose lifecycle justbb@0.0.0~dev: CWD: G:\workspace\Atom\JustBB
+11 silly lifecycle justbb@0.0.0~dev: Args: [ '/d /s /c', 'nodemon ./bin/www --exec babel-node' ]
+12 verbose stack Error: kill ENOSYS
+12 verbose stack     at exports._errnoException (util.js:1018:11)
+12 verbose stack     at process.kill (internal/process.js:190:13)
+12 verbose stack     at process.listener (C:\Users\Gaodig_Dev08\AppData\Roaming\npm\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+12 verbose stack     at emitNone (events.js:91:20)
+12 verbose stack     at process.emit (events.js:185:7)
+12 verbose stack     at processEmit (C:\Users\Gaodig_Dev08\AppData\Roaming\npm\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at processEmit (C:\Users\Gaodig_Dev08\AppData\Roaming\npm\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at Signal.wrap.onsignal (internal/process.js:217:44)
+13 verbose cwd G:\workspace\Atom\JustBB
+14 error Windows_NT 10.0.16299
+15 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Gaodig_Dev08\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
+16 error node v6.10.3
+17 error npm  v4.0.3
+18 error code ENOSYS
+19 error errno ENOSYS
+20 error syscall kill
+21 error kill ENOSYS
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]
